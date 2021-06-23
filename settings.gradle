@@ -1,0 +1,2 @@
+rootProject.name = "MindTechApplication"
+include ':app'

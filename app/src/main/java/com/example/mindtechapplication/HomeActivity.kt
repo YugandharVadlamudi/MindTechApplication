@@ -1,30 +1,79 @@
 package com.example.mindtechapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.mindtechapplication.adapter.CursolAapter
+import com.example.mindtechapplication.adapter.CarouselAdapter
 import com.example.mindtechapplication.adapter.ListItemsAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_home.*
+
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initViewpager()
-initRecyclerView()
+        initRecyclerView()
     }
-    fun initViewpager() {
-        val arrayListOf = arrayListOf(R.drawable.on, R.drawable.yug_1)
-        val cursolAapter = CursolAapter(this, arrayListOf)
-        viewpager.adapter = cursolAapter
+
+    private fun initViewpager() {
+        val arrayListOf = arrayListOf(R.drawable.on, R.drawable.yug)
+        val carouselAdapter = CarouselAdapter(this, arrayListOf)
+        viewpager.adapter = carouselAdapter
     }
-    fun initRecyclerView() {
+
+    private fun initRecyclerView() {
         val arrayListOf =
-            arrayListOf<String>("ONe", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight","Nine","Ten","Eleven","Tweleve","Thirteen","Fourtin","Fifteen","Sventeen")
+            arrayListOf(
+                "Afghanistan",
+                "Albania",
+                "Algeria",
+                "Andorra",
+                "Angola",
+                "Antigua and Barbuda",
+                "Argentina",
+                "Armenia",
+                "Australia",
+                "Austria",
+                "Austrian Empire",
+                "Azerbaijan",
+                "Baden",
+                "Bahamas",
+                "Bahrain",
+                "Bangladesh",
+                "Barbados",
+                "Bavaria",
+                "Belarus",
+                "Belgium",
+                "Belize",
+                "Benin",
+                "Bolivia",
+                "Bosnia",
+                "Botswana",
+                "Brazil",
+                "Brunei",
+                "Brunswick",
+                "Bulgaria"
+            )
         val listItemsAdapter = ListItemsAdapter(this, arrayListOf)
-        rv_view.layoutManager=LinearLayoutManager(this)
-        rv_view.adapter=listItemsAdapter
+        rv_view.layoutManager = LinearLayoutManager(this)
+        rv_view.adapter = listItemsAdapter
+        TabLayoutMediator(tl_main, viewpager) { tab, position ->
+        }.attach()
+        sv_main.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                listItemsAdapter.filter.filter(newText)
+                return false
+            }
+        })
+    }
+
+    override fun toString(): String {
+        return "HomeActivity()"
     }
 }

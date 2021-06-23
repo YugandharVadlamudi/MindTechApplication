@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mindtechapplication.R
 import kotlinx.android.synthetic.main.inflate_image_curso.view.*
 
-class CursolAapter(val context: Context, val arrayResources: ArrayList<Int>) :
-    RecyclerView.Adapter<CursolAapter.ImageViewHolder>() {
+class CarouselAdapter(private val context: Context, private val arrayResources: ArrayList<Int>) :
+    RecyclerView.Adapter<CarouselAdapter.ImageViewHolder>() {
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 

@@ -6,13 +6,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mindtechapplication.adapter.CarouselAdapter
 import com.example.mindtechapplication.adapter.ListItemsAdapter
+import com.example.mindtechapplication.databinding.ActivityHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_home.*
+// import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViewpager()
         initRecyclerView()
     }
@@ -20,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
     private fun initViewpager() {
         val arrayListOf = arrayListOf(R.drawable.on, R.drawable.yug)
         val carouselAdapter = CarouselAdapter(this, arrayListOf)
-        viewpager.adapter = carouselAdapter
+        binding.viewpager.adapter = carouselAdapter
     }
 
     private fun initRecyclerView() {
@@ -54,14 +57,16 @@ class HomeActivity : AppCompatActivity() {
                 "Brazil",
                 "Brunei",
                 "Brunswick",
-                "Bulgaria"
+                "Bulgaria",
             )
         val listItemsAdapter = ListItemsAdapter(this, arrayListOf)
-        rv_view.layoutManager = LinearLayoutManager(this)
-        rv_view.adapter = listItemsAdapter
-        TabLayoutMediator(tl_main, viewpager) { tab, position ->
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.rvView.layoutManager = linearLayoutManager
+        binding.rvView.adapter = listItemsAdapter
+        TabLayoutMediator(binding.tlMain, binding.viewpager) { tab, position ->
         }.attach()
-        sv_main.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.svMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
